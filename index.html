@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <script src="https://use.fontawesome.com/2af3c9dee1.js"></script>
+</head>
+<body onload="enableEditMode();">
+    <div>
+        <button onclick="execCmd('bold');"><i class="fa fa-bold"></i></button>
+        <button onclick="execCmd('italic');"><i class="fa fa-italic"></i></button>
+        <button onclick="execCmd('underline');"><i class="fa fa-underline"></i></button>
+        <button onclick="execCmd('strikethrough');"><i class="fa fa-strikethrough"></i></button>
+        <button onclick="execCmd('justifyLeft');"><i class="fa fa-align-left"></i></button>
+        <button onclick="execCmd('justifyCenter');"><i class="fa fa-align-center"></i></button>
+        <button onclick="execCmd('justifyRight');"><i class="fa fa-align-right"></i></button>
+        <button onclick="execCmd('justifyFull');"><i class="fa fa-align-justify"></i></button>
+        <button onclick="execCmd('cut');"><i class="fa fa-cut"></i></button>
+        <button onclick="execCmd('copy');"><i class="fa fa-copy"></i></button>
+        <button onclick="execCmd('undo');"><i class="fa fa-undo"></i></button>
+        <button onclick="execCmd('redo');"><i class="fa fa-repeat"></i></button>
+        <button onclick="execCmd('subscript');"><i class="fa fa-subscript"></i></button>
+        <button onclick="execCmd('superscript');"><i class="fa fa-superscript"></i></button>
+        <button onclick="execCmd('insertParagraph');"><i class="fa fa-paragraph"></i></button>
+        <select onchange="execCommandWithArg('formatBlock', this.value);">
+            <option value="H1">H1</option>
+            <option value="H2">H2</option>
+            <option value="H3">H3</option>
+            <option value="H4">H4</option>
+            <option value="H5">H5</option>
+            <option value="H6">H6</option>
+            
+        </select>
+        <button onclick="execCmd('insertHorizontalRule');">HR</button>
+        <button onclick="execCommandWithArg('createLink', prompt('Enter a URL', 'https://'));"><i class="fa fa-link"></i></button>
+        <button onclick="execCmd('unlink');"><i class="fa fa-unlink"></i></button>
+        <button onclick="toggleSource();"><i class="fa fa-code"></i></button>
+        <button onclick="toggleEdit();">Toggle Edit</button>
+        <br>
+        <select onchange="execCommandWithArg('fontNmae', this.value);">
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans">Comic Sans</option>
+            <option value="Courier">Courier</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Times New Roman">Times New Roman</option>
+            
+        </select>
+        <select onchange="execCommandWithArg('fontSize', this.value);">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        Fore Color: <input type="color" onchange="execCommandWithArg('foreColor', this.value);"/> 
+        Background Color: <input type="color" onchange="execCommandWithArg('hiliteColor', this.value);"/>
+        <button onclick="execCommandWithArg('insertImage', prompt('Enter the image URL', ''));"><i class="fa fa-file-image-o"></i></button>
+        <button onclick="execCmd('selectAll');">Select All</button>
+        
+    </div>
+    <iframe name = "richTextField" style="width: 1000px; height: 500px;"></iframe>
+    <script type="text/javascript">
+
+        var showingSourceCode = false;
+        var isInEditMode = true;
+        function enableEditMode () {
+            richTextField.document.designMode = "On";
+        }
+        function execCmd (command) {
+            richTextField.document.execCommand(command, false, null);
+            
+        }
+        function execCommandWithArg (command, arg) {
+            richTextField.document.execCommand(command, false, arg);
+            
+        }
+        function toggleSource () {
+            if(showingSourceCode){
+                richTextField.document.getElementsByTagName('body')[0].innerHTML = richTextField.document.getElementsByTagName('body')[0].textContent;
+                showingSourceCode = false;
+            }else{
+                richTextField.document.getElementsByTagName('body')[0].innerHTML = richTextField.document.getElementsByTagName('body')[0].innerHTML;
+                showingSourceCode = true;
+            }
+
+            
+        }
+        function toggleEdit() {
+            if(isInEditMode){
+                richTextField.document.designMode = "Off";
+                isInEditMode = false;
+            }else{
+                richTextField.document.designMode = "On";
+                isInEditMode = true;
+            }
+            
+        }
+    
+    
+    </script>
+    
+</body>
+</html>
